@@ -1,7 +1,7 @@
 from sic_framework.devices import Nao
 from sic_framework.devices.common_naoqi.naoqi_text_to_speech import NaoqiTextToSpeechRequest
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtWidgets import QPushButton, QWidget, QGridLayout
+from PyQt5.QtWidgets import QPushButton, QWidget, QGridLayout, QLineEdit
 
 from buttons import *
 import sys
@@ -26,12 +26,23 @@ class MainWindow(QMainWindow):
         self.n_times_clicked = 0
 
         layout = QGridLayout()
+        # predefined btns
+        # TODO: better layout for easier flow control
         for kvp in BUTTONS:
             (k, v) = kvp
             btn = QPushButton(k)
             btn.setProperty("msg", v)
             btn.clicked.connect(self.onClick)
             layout.addWidget(btn)
+        
+        # input box
+        self.textbox = QLineEdit(self)
+        self.textbox.move(20, 20)
+        self.textbox.resize(280,40)
+        layout.addWidget(self.textbox)
+        go_btn = QPushButton("GO")
+        go_btn.clicked.connect(self.sendText)
+        layout.addWidget(go_btn)
 
         widget = QWidget()
         widget.setLayout(layout)
@@ -41,6 +52,10 @@ class MainWindow(QMainWindow):
         widget = self.sender()
         msg = widget.property("msg")
         self.listener(msg)
+
+    def sendText(self):
+        self.listener(self.textbox.text())
+        self.textbox.setText("")
 
 
 if __name__ == "__main__":
