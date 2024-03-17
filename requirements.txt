@@ -1,8 +1,17 @@
+aiohttp==3.9.3
+aiosignal==1.3.1
 async-timeout==4.0.3
+attrs==23.2.0
 bcrypt==4.1.2
+certifi==2024.2.2
 cffi==1.16.0
+charset-normalizer==3.3.2
 cryptography==42.0.5
+frozenlist==1.4.1
+idna==3.6
+multidict==6.0.5
 numpy==1.26.4
+openai==0.28.1
 opencv-python==4.9.0.80
 paramiko==3.4.0
 pillow==10.2.0
@@ -14,6 +23,10 @@ PyQt5-Qt5==5.15.12
 PyQt5-sip==12.13.0
 PyTurboJPEG==1.7.3
 redis==5.0.3
+requests==2.31.0
 scp==0.14.5
--e git+https://bitbucket.org/socialroboticshub/framework.git@57808748c98b09bc896075a42042b4f28e3059aa#egg=sic_framework
+-e git+https://bitbucket.org/socialroboticshub/framework.git@5a6f9e59de69f7b8b93c40fd1ed292f5b630d855#egg=sic_framework
 six==1.16.0
+tqdm==4.66.2
+urllib3==2.2.1
+yarl==1.9.4
