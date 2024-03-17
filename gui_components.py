@@ -9,7 +9,12 @@ def TitleLabel(text):
     label.setFont(font)
     return label
 
-def SeperatorLine():
+def HorizontalSeperatorLine():
     line = QFrame()
     line.setFrameShape(QFrame.HLine)
+    return line
+
+def VerticalSeperatorLine():
+    line = QFrame()
+    line.setFrameShape(QFrame.VLine)
     return line

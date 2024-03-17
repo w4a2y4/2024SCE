@@ -1,14 +1,6 @@
 from ch1 import *
 from ch2 import *
 
-BUTTONS = [
-    ("greetings", "Good morning I am Nick."),
-    ("ch1 start", "Let's start from chapter 1 today"),
-    ("ch1 summary", "Once upn a time in a far far away galaxy..."),
-    ("ch1 question", "Who is Toto?"),
-    ("bye","See you next time, bye bye!")
-]
-
 # Phase1: Greetings
 FIRST_GREETING = ("1st greeting", "Hi, I am Nick! I heard that you love reading and I am here to help you with that. Today we will start with a beautiful book called 'The Wixard of OZ'")
 SECOND_GREETING = ("ask for summary", "Good to see you again! I somewhat forget what we read last time. Can you help me out?")
@@ -22,5 +14,13 @@ START_READ = ("start read", f"Let's start reading! {__explain_before_read}")
 CONTINUE_READ = ("start read", f"Let's continue reading! {__explain_before_read}")
 
 # Phase2: Reading
+DEFAULT_ANSWER = ("default", "Hmmmm.... I don't know. Let's ask Markus next time!")
+CH1_FULL_TEXT = ("ch1 full text", ch1.fulltext)
+CH2_FULL_TEXT = ("ch2 full text", ch2.fulltext)
+# TODO: in-between questions
 
 # Phase3: Feed back & farewell
+END_SESSION = ("end session", "Alright! That's all for today!")
+FEEDBACK_PAGE = ("feedback page", "Next time should we read more or less pages?")
+FEEDBACK_QUESTIONS = ("feedback questions", "Do you want me to ask more or less questions next time?")
+FAREWELL = ("farewell", "It's been so fun reading together! See you next time, bye bye!")

@@ -3,7 +3,7 @@ from sic_framework.devices.common_naoqi.naoqi_text_to_speech import NaoqiTextToS
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from buttons import *
+from transcript import *
 from gui_components import *
 import sys
 
@@ -25,21 +25,63 @@ class MainWindow(QMainWindow):
 
         self.tts = tts
 
-        layout = QVBoxLayout()
-
-        layout.addWidget(TitleLabel("Phase 1: Greetings"))
+        layout = QHBoxLayout()
         layout.addLayout(self._greetingsLayout())
-        layout.addWidget(SeperatorLine())
-
-        layout.addWidget(TitleLabel("Phase 2: Reading"))
+        layout.addWidget(VerticalSeperatorLine())
         layout.addLayout(self._readingLayout())
-        layout.addWidget(SeperatorLine())
-        
-        layout.addWidget(TitleLabel("Phase 3: Farewell & Feedback"))
+        layout.addWidget(VerticalSeperatorLine())
         layout.addLayout(self._farewellLayout())
-        layout.addWidget(SeperatorLine())
-        
-        # input box
+
+        root = QVBoxLayout()
+        root.addLayout(layout)
+        root.addWidget(HorizontalSeperatorLine())
+        root.addLayout(self._freeInputLayout())
+
+        widget = QWidget()
+        widget.setLayout(root)
+        self.setCentralWidget(widget)
+    
+    def _greetingsLayout(self):
+        layout = QVBoxLayout()
+        layout.addWidget(TitleLabel("Phase 1: Greetings"))
+        layout.addWidget(QLabel("1st time"))
+        layout.addWidget(self.setBtn(FIRST_GREETING))
+        layout.addWidget(self.setBtn(START_READ))
+        layout.addWidget(HorizontalSeperatorLine())
+        layout.addWidget(QLabel("2nd time"))
+        layout.addWidget(self.setBtn(SECOND_GREETING))
+        layout.addWidget(self.setBtn(CH1_SHORT_SUMMARY))
+        layout.addWidget(self.setBtn(CH1_LONG_SUMMARY))
+        layout.addWidget(self.setBtn(CONTINUE_READ))
+        return layout
+    
+    def _readingLayout(self):
+        layout = QVBoxLayout()
+        layout.addWidget(TitleLabel("Phase 2: Reading"))
+        layout.addWidget(QLabel("robot reads"))
+        layout.addWidget(self.setBtn(CH1_FULL_TEXT))
+        layout.addWidget(self.setBtn(CH2_FULL_TEXT))
+        layout.addWidget(HorizontalSeperatorLine())
+        layout.addWidget(QLabel("ask in-between questions"))
+        # TODO
+        layout.addWidget(HorizontalSeperatorLine())
+        layout.addWidget(QLabel("answer random questions"))
+        layout.addWidget(self.setBtn(DEFAULT_ANSWER))
+        layout.addStretch()
+        return layout
+    
+    def _farewellLayout(self):
+        layout = QVBoxLayout()
+        layout.addWidget(TitleLabel("Phase 3: Farewell & Feedback"))
+        layout.addWidget(self.setBtn(END_SESSION))
+        layout.addWidget(self.setBtn(FEEDBACK_PAGE))
+        layout.addWidget(self.setBtn(FEEDBACK_QUESTIONS))
+        layout.addWidget(self.setBtn(FAREWELL))
+        layout.addStretch()
+        return layout
+    
+    def _freeInputLayout(self):
+        layout = QHBoxLayout()
         self.textbox = QLineEdit(self)
         self.textbox.move(20, 20)
         self.textbox.resize(280,40)
@@ -47,36 +89,7 @@ class MainWindow(QMainWindow):
         go_btn = QPushButton("GO")
         go_btn.clicked.connect(self.sendText)
         layout.addWidget(go_btn)
-
-        widget = QWidget()
-        widget.setLayout(layout)
-        self.setCentralWidget(widget)
-    
-    def _greetingsLayout(self):
-        layout = QHBoxLayout()
-        col1 = QVBoxLayout()
-        col1.addWidget(QLabel("1st time"))
-        col1.addWidget(self.setBtn(FIRST_GREETING))
-        col1.addWidget(self.setBtn(START_READ))
-        col1.addStretch()
-        col2 = QVBoxLayout()
-        col2.addWidget(QLabel("2nd time"))
-        col2.addWidget(self.setBtn(SECOND_GREETING))
-        col2.addWidget(self.setBtn(CH1_SHORT_SUMMARY))
-        col2.addWidget(self.setBtn(CH1_LONG_SUMMARY))
-        col2.addWidget(self.setBtn(CONTINUE_READ))
-        col2.addStretch()
-        layout.addLayout(col1)
-        layout.addLayout(col2)
         return layout
-    
-    def _readingLayout(self):
-        # TODO
-        return QHBoxLayout()
-    
-    def _farewellLayout(self):
-        # TODO
-        return QHBoxLayout()
 
     def setBtn(self, kvp: tuple):
         (k, v) = kvp
