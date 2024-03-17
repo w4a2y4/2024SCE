@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import *
 from transcript import *
 from gui_components import *
 import sys
+from ch1 import ch1
+from ch2 import ch2
 
 ROBOT_EXIST = False
 
@@ -53,6 +55,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.setBtn(CH1_SHORT_SUMMARY))
         layout.addWidget(self.setBtn(CH1_LONG_SUMMARY))
         layout.addWidget(self.setBtn(CONTINUE_READ))
+        layout.addStretch()
         return layout
     
     def _readingLayout(self):
@@ -63,11 +66,26 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.setBtn(CH2_FULL_TEXT))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("ask in-between questions"))
-        # TODO
+        layout.addLayout(self._inBetweenQuestions(ch1))
+        layout.addLayout(self._inBetweenQuestions(ch2))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("answer random questions"))
         layout.addWidget(self.setBtn(DEFAULT_ANSWER))
         layout.addStretch()
+        return layout
+    
+    def _inBetweenQuestions(self, chapter):
+        layout = QVBoxLayout()
+        layout.addWidget(QLabel(chapter.title))
+        questions = QHBoxLayout()
+        questions.addWidget(QLabel("Q:"))
+        answers = QHBoxLayout()
+        answers.addWidget(QLabel("A:"))
+        for i, qa in enumerate(chapter.questions):
+            questions.addWidget(self.setBtn((str(i), qa[0])))
+            answers.addWidget(self.setBtn((str(i), qa[1])))
+        layout.addLayout(questions)
+        layout.addLayout(answers)
         return layout
     
     def _farewellLayout(self):
@@ -118,8 +136,3 @@ if __name__ == "__main__":
     window.show()
 
     app.exec()
-
-
-
-
-

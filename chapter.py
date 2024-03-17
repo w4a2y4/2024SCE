@@ -1,5 +1,6 @@
 class Chapter:
-    def __init__(self, longsummary, shortsummary, fulltext, questions, current_question=0):
+    def __init__(self, title, longsummary, shortsummary, fulltext, questions, current_question=0):
+        self.title = title
         self.longsummary = longsummary
         self.shortsummary = shortsummary
         self.fulltext = fulltext
