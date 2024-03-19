@@ -95,8 +95,8 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         layout.addWidget(TitleLabel("Phase 2: Reading"))
         layout.addWidget(QLabel("Robot reads"))
-        layout.addWidget(self.setTtsBtn(CH1_FULL_TEXT)) # TODO: seperate to paragraphs?
-        layout.addWidget(self.setTtsBtn(CH2_FULL_TEXT))
+        layout.addLayout(self._chapterContents(ch1))
+        layout.addLayout(self._chapterContents(ch2))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("Ask in-between questions"))
         layout.addLayout(self._inBetweenQuestions(ch1))
@@ -105,6 +105,14 @@ class MainWindow(QMainWindow):
         layout.addWidget(QLabel("Answer random questions"))
         layout.addWidget(self.setTtsBtn(DEFAULT_ANSWER))
         layout.addStretch()
+        return layout
+    
+    def _chapterContents(self, chapter):
+        layout = QHBoxLayout()
+        layout.addWidget(QLabel(chapter.title))
+        layout.addWidget(self.setTtsBtn(CH1_FULL_TEXT))
+        for i, p in enumerate(chapter.paragraphs):
+            layout.addWidget(self.setTtsBtn((f"P{str(i)}", p)))
         return layout
     
     def _inBetweenQuestions(self, chapter):

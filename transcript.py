@@ -17,7 +17,6 @@ CONTINUE_READ = ("start read", f"Let's continue reading! {__explain_before_read}
 DEFAULT_ANSWER = ("default", "Hmmmm.... I don't know. Let's ask Markus next time!")
 CH1_FULL_TEXT = ("ch1 full text", ch1.fulltext)
 CH2_FULL_TEXT = ("ch2 full text", ch2.fulltext)
-# TODO: in-between questions
 
 # Phase3: Feed back & farewell
 END_SESSION = ("end session", "Alright! That's all for today!")
@@ -26,4 +25,6 @@ FEEDBACK_QUESTIONS = ("feedback questions", "Do you want me to ask more or less 
 FAREWELL = ("farewell", "It's been so fun reading together! See you next time, bye bye!")
 
 # for GPT
-SYS_PROMPT = f"You are a reading companion agent named Nick. You are here to read with a dimentia patient. Today, you are reading the book 'The Wonderful Wizard of OZ' together. The patient may ask you about the plot of the story. Please read the following content and anser accordingly: {ch1.fulltext} {ch2.fulltext}"
+SYS_PROMPT = f"You are a reading companion agent named Nick. You are here to read with a dimentia patient.\
+     Today, you are reading the book 'The Wonderful Wizard of OZ' together. The patient may ask you about the \
+     plot of the story. Please read the following content and anser accordingly: {ch1.fulltext} {ch2.fulltext}"
