@@ -1,5 +1,7 @@
 from sic_framework.devices import Nao
 from sic_framework.devices.common_naoqi.naoqi_text_to_speech import NaoqiTextToSpeechRequest
+from sic_framework.devices.common_naoqi.naoqi_motion_recorder import PlayRecording, NaoqiMotionRecording
+from sic_framework.devices.common_naoqi.naoqi_stiffness import Stiffness
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
@@ -12,16 +14,21 @@ from ch1 import ch1
 from ch2 import ch2
 
 ROBOT_EXIST = False
+IP = '192.168.0.151'
 
 class Controller():
     def __init__(self, nao, gpt_client):
         self.nao = nao
         self.gpt_client = gpt_client
+        self.chain = ["RArm"]
+        self.wave_motion = NaoqiMotionRecording.load("wave.motion")
 
     def tts(self, text):
-        if self.nao != None:
-            self.nao.tts.request(NaoqiTextToSpeechRequest(text, pitch_shift=1.0, volume=1.5, speed=50), block=False)
         print(f"** SPEAKING ** {text}")
+        if self.nao == None:
+            return
+        self.nao.tts.request(\
+            NaoqiTextToSpeechRequest(text, pitch_shift=1.0, volume=1.5, speed=50), block=False)
         return
     
     def askGpt(self, prompt):
@@ -32,8 +39,18 @@ class Controller():
                 {"role": "user", "content": prompt}
             ]
         )
-        print(f"** GPT Response ** {response}")
+        # print(f"** GPT Response ** {response}")
         self.tts(response.choices[0].message.content)
+        return
+    
+    def flipTablet(self):
+        print("** ARM MOTION **")
+        if self.nao == None:
+            return
+        # play pre-recorded motions
+        self.nao.stiffness.request(Stiffness(.95, self.chain))
+        self.nao.motion_record.request(PlayRecording(self.wave_motion))
+        self.nao.stiffness.request(Stiffness(.0, self.chain))
         return
 
 class MainWindow(QMainWindow):
@@ -77,26 +94,25 @@ class MainWindow(QMainWindow):
     def _readingLayout(self):
         layout = QVBoxLayout()
         layout.addWidget(TitleLabel("Phase 2: Reading"))
-        layout.addWidget(QLabel("robot reads"))
-        layout.addWidget(self.setBtn(CH1_FULL_TEXT))
+        layout.addWidget(QLabel("Robot reads"))
+        layout.addWidget(self.setBtn(CH1_FULL_TEXT)) # TODO: seperate to paragraphs?
         layout.addWidget(self.setBtn(CH2_FULL_TEXT))
         layout.addWidget(HorizontalSeperatorLine())
-        layout.addWidget(QLabel("ask in-between questions"))
+        layout.addWidget(QLabel("Ask in-between questions"))
         layout.addLayout(self._inBetweenQuestions(ch1))
         layout.addLayout(self._inBetweenQuestions(ch2))
         layout.addWidget(HorizontalSeperatorLine())
-        layout.addWidget(QLabel("answer random questions"))
+        layout.addWidget(QLabel("Answer random questions"))
         layout.addWidget(self.setBtn(DEFAULT_ANSWER))
         layout.addStretch()
         return layout
     
     def _inBetweenQuestions(self, chapter):
         layout = QVBoxLayout()
-        layout.addWidget(QLabel(chapter.title))
         questions = QHBoxLayout()
-        questions.addWidget(QLabel("Q:"))
+        questions.addWidget(QLabel(f"{chapter.title} - Q"))
         answers = QHBoxLayout()
-        answers.addWidget(QLabel("A:"))
+        answers.addWidget(QLabel(f"{chapter.title} - A"))
         for i, qa in enumerate(chapter.questions):
             questions.addWidget(self.setBtn((str(i), qa[0])))
             answers.addWidget(self.setBtn((str(i), qa[1])))
@@ -111,6 +127,9 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.setBtn(FEEDBACK_PAGE))
         layout.addWidget(self.setBtn(FEEDBACK_QUESTIONS))
         layout.addWidget(self.setBtn(FAREWELL))
+        # append motion layout
+        layout.addWidget(HorizontalSeperatorLine())
+        layout.addLayout(self._motionLayout())
         layout.addStretch()
         return layout
     
@@ -134,6 +153,14 @@ class MainWindow(QMainWindow):
         ask_btn = QPushButton("ASK GPT")
         ask_btn.clicked.connect(self.askGpt)
         layout.addWidget(ask_btn)
+        return layout
+    
+    def _motionLayout(self):
+        layout = QVBoxLayout()
+        layout.addWidget(TitleLabel("Recorded motions"))
+        flip_btn = QPushButton("FLIP TABLET")
+        flip_btn.clicked.connect(self.controller.flipTablet)
+        layout.addWidget(flip_btn)
         return layout
 
     def setBtn(self, kvp: tuple):
@@ -162,8 +189,8 @@ if __name__ == "__main__":
     # setup gpt
     gpt_client = OpenAI()
 
-     # connect to robot
-    controller = Controller(Nao(ip='192.168.0.151') if ROBOT_EXIST else None, gpt_client)
+    # connect to robot
+    controller = Controller(Nao(ip=IP) if ROBOT_EXIST else None, gpt_client)
 
     # start gui
     app = QApplication(sys.argv)
