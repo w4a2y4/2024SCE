@@ -80,14 +80,14 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         layout.addWidget(TitleLabel("Phase 1: Greetings"))
         layout.addWidget(QLabel("1st time"))
-        layout.addWidget(self.setBtn(FIRST_GREETING))
-        layout.addWidget(self.setBtn(START_READ))
+        layout.addWidget(self.setTtsBtn(FIRST_GREETING))
+        layout.addWidget(self.setTtsBtn(START_READ))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("2nd time"))
-        layout.addWidget(self.setBtn(SECOND_GREETING))
-        layout.addWidget(self.setBtn(CH1_SHORT_SUMMARY))
-        layout.addWidget(self.setBtn(CH1_LONG_SUMMARY))
-        layout.addWidget(self.setBtn(CONTINUE_READ))
+        layout.addWidget(self.setTtsBtn(SECOND_GREETING))
+        layout.addWidget(self.setTtsBtn(CH1_SHORT_SUMMARY))
+        layout.addWidget(self.setTtsBtn(CH1_LONG_SUMMARY))
+        layout.addWidget(self.setTtsBtn(CONTINUE_READ))
         layout.addStretch()
         return layout
     
@@ -95,15 +95,15 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         layout.addWidget(TitleLabel("Phase 2: Reading"))
         layout.addWidget(QLabel("Robot reads"))
-        layout.addWidget(self.setBtn(CH1_FULL_TEXT)) # TODO: seperate to paragraphs?
-        layout.addWidget(self.setBtn(CH2_FULL_TEXT))
+        layout.addWidget(self.setTtsBtn(CH1_FULL_TEXT)) # TODO: seperate to paragraphs?
+        layout.addWidget(self.setTtsBtn(CH2_FULL_TEXT))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("Ask in-between questions"))
         layout.addLayout(self._inBetweenQuestions(ch1))
         layout.addLayout(self._inBetweenQuestions(ch2))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("Answer random questions"))
-        layout.addWidget(self.setBtn(DEFAULT_ANSWER))
+        layout.addWidget(self.setTtsBtn(DEFAULT_ANSWER))
         layout.addStretch()
         return layout
     
@@ -114,8 +114,8 @@ class MainWindow(QMainWindow):
         answers = QHBoxLayout()
         answers.addWidget(QLabel(f"{chapter.title} - A"))
         for i, qa in enumerate(chapter.questions):
-            questions.addWidget(self.setBtn((str(i), qa[0])))
-            answers.addWidget(self.setBtn((str(i), qa[1])))
+            questions.addWidget(self.setTtsBtn((str(i), qa[0])))
+            answers.addWidget(self.setTtsBtn((str(i), qa[1])))
         layout.addLayout(questions)
         layout.addLayout(answers)
         return layout
@@ -123,10 +123,10 @@ class MainWindow(QMainWindow):
     def _farewellLayout(self):
         layout = QVBoxLayout()
         layout.addWidget(TitleLabel("Phase 3: Farewell & Feedback"))
-        layout.addWidget(self.setBtn(END_SESSION))
-        layout.addWidget(self.setBtn(FEEDBACK_PAGE))
-        layout.addWidget(self.setBtn(FEEDBACK_QUESTIONS))
-        layout.addWidget(self.setBtn(FAREWELL))
+        layout.addWidget(self.setTtsBtn(END_SESSION))
+        layout.addWidget(self.setTtsBtn(FEEDBACK_PAGE))
+        layout.addWidget(self.setTtsBtn(FEEDBACK_QUESTIONS))
+        layout.addWidget(self.setTtsBtn(FAREWELL))
         # append motion layout
         layout.addWidget(HorizontalSeperatorLine())
         layout.addLayout(self._motionLayout())
@@ -163,14 +163,14 @@ class MainWindow(QMainWindow):
         layout.addWidget(flip_btn)
         return layout
 
-    def setBtn(self, kvp: tuple):
+    def setTtsBtn(self, kvp: tuple):
         (k, v) = kvp
         btn = QPushButton(k)
         btn.setProperty("msg", v)
-        btn.clicked.connect(self.onClick)
+        btn.clicked.connect(self.tts)
         return btn
 
-    def onClick(self):
+    def tts(self):
         widget = self.sender()
         msg = widget.property("msg")
         self.controller.tts(msg)
