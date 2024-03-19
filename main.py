@@ -40,7 +40,7 @@ class Controller():
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": SYS_PROMPT},
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": prompt + " Please limit your answer to less than 3 sentences."}
             ]
         )
         # print(f"** GPT Response ** {response}")
