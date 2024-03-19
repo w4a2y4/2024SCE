@@ -14,6 +14,7 @@ from ch1 import ch1
 from ch2 import ch2
 
 ROBOT_EXIST = True
+USING_GPT = True
 IP = '192.168.1.103'
 
 class Controller():
@@ -32,6 +33,9 @@ class Controller():
         return
     
     def askGpt(self, prompt):
+        if not USING_GPT:
+            self.tts("Chat GPT not supported.")
+            return
         response = self.gpt_client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -199,7 +203,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
 
     # setup gpt
-    gpt_client = OpenAI()
+    gpt_client = OpenAI() if USING_GPT else None
 
     # connect to robot
     controller = Controller(Nao(ip=IP) if ROBOT_EXIST else None, gpt_client)
