@@ -14,7 +14,7 @@ from ch1 import ch1
 from ch2 import ch2
 
 ROBOT_EXIST = False
-IP = '192.168.0.151'
+IP = '192.168.1.103'
 
 class Controller():
     def __init__(self, nao, gpt_client):
@@ -28,7 +28,7 @@ class Controller():
         if self.nao == None:
             return
         self.nao.tts.request(\
-            NaoqiTextToSpeechRequest(text, pitch_shift=1.0, volume=1.5, speed=50), block=False)
+            NaoqiTextToSpeechRequest(text, pitch_shift=1.0, volume=1.5, speed=100), block=False)
         return
     
     def askGpt(self, prompt):
