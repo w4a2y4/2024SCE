@@ -13,7 +13,7 @@ from gui_components import *
 from ch1 import ch1
 from ch2 import ch2
 
-ROBOT_EXIST = False
+ROBOT_EXIST = True
 IP = '192.168.1.103'
 
 class Controller():
@@ -118,7 +118,7 @@ class MainWindow(QMainWindow):
     def _inBetweenQuestions(self, chapter):
         layout = QVBoxLayout()
         questions = QHBoxLayout()
-        questions.addWidget(QLabel(f"{chapter.title} - Q"))
+        questions.addWidget(QLabel(f"{chapter.title} - Questions"))
         answer_correct = QHBoxLayout()
         answer_correct.addWidget(QLabel(f"{chapter.title} - A (correct)"))
         answer_struggle = QHBoxLayout()
