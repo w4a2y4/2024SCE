@@ -119,13 +119,17 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         questions = QHBoxLayout()
         questions.addWidget(QLabel(f"{chapter.title} - Q"))
-        answers = QHBoxLayout()
-        answers.addWidget(QLabel(f"{chapter.title} - A"))
+        answer_correct = QHBoxLayout()
+        answer_correct.addWidget(QLabel(f"{chapter.title} - A (correct)"))
+        answer_struggle = QHBoxLayout()
+        answer_struggle.addWidget(QLabel(f"{chapter.title} - A (struggle)"))
         for i, qa in enumerate(chapter.questions):
             questions.addWidget(self.setTtsBtn((str(i), qa[0])))
-            answers.addWidget(self.setTtsBtn((str(i), qa[1])))
+            answer_correct.addWidget(self.setTtsBtn((str(i), qa[1])))
+            answer_struggle.addWidget(self.setTtsBtn((str(i), qa[2])))
         layout.addLayout(questions)
-        layout.addLayout(answers)
+        layout.addLayout(answer_correct)
+        layout.addLayout(answer_struggle)
         return layout
     
     def _farewellLayout(self):
