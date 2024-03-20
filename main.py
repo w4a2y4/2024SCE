@@ -13,8 +13,8 @@ from gui_components import *
 from ch1 import ch1
 from ch2 import ch2
 
-ROBOT_EXIST = True
-USING_GPT = True
+ROBOT_EXIST = False
+USING_GPT = False
 IP = '192.168.1.103'
 
 class Controller():
@@ -101,10 +101,12 @@ class MainWindow(QMainWindow):
         layout.addWidget(QLabel("Robot reads"))
         layout.addLayout(self._chapterContents(ch1))
         layout.addLayout(self._chapterContents(ch2))
+        layout.addWidget(self.setTtsBtn(CONTINUE_READING))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("Ask in-between questions"))
         layout.addLayout(self._inBetweenQuestions(ch1))
         layout.addLayout(self._inBetweenQuestions(ch2))
+        layout.addWidget(self.setTtsBtn(INBETWEEN_QUESTION))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("Answer random questions"))
         layout.addWidget(self.setTtsBtn(DEFAULT_ANSWER))
@@ -128,9 +130,9 @@ class MainWindow(QMainWindow):
         answer_struggle = QHBoxLayout()
         answer_struggle.addWidget(QLabel(f"{chapter.title} - A (struggle)"))
         for i, qa in enumerate(chapter.questions):
-            questions.addWidget(self.setTtsBtn((str(i), qa[0])))
-            answer_correct.addWidget(self.setTtsBtn((str(i), qa[1])))
-            answer_struggle.addWidget(self.setTtsBtn((str(i), qa[2])))
+            questions.addWidget(self.setTtsBtn(("Q" + str(i), qa[0])))
+            answer_correct.addWidget(self.setTtsBtn(("Q" + str(i), qa[1])))
+            answer_struggle.addWidget(self.setTtsBtn(("Q" + str(i), qa[2])))
         layout.addLayout(questions)
         layout.addLayout(answer_correct)
         layout.addLayout(answer_struggle)

@@ -23,6 +23,8 @@ END_SESSION = ("end session", "Alright! That's all for today!")
 FEEDBACK_PAGE = ("feedback page", "Next time should we read more or less pages?")
 FEEDBACK_QUESTIONS = ("feedback questions", "Do you want me to ask more or less questions next time?")
 FAREWELL = ("farewell", "It's been so fun reading together! See you next time, bye bye!")
+CONTINUE_READING = ("continue reading", "Do you want me to continue reading? Or should we stop for today?")
+INBETWEEN_QUESTION = ("inbetween question", "Okay! Time for a question")
 
 # for GPT
 SYS_PROMPT = f"You are a reading companion agent named Nick. You are here to read with a dimentia patient.\
