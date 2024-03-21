@@ -26,9 +26,9 @@ ch2 = Chapter(
          "Right on! Dorothy is probably feeling surprised and a bit confused about these shoes. They're quite special, and she doesn’t know what to make of them yet.",
          "Dorothy might be feeling a mixture of things: surprise, curiosity, maybe even a little nervous about the attention she's getting. Gifts can sometimes be unexpected, but they often lead to interesting adventures!"
         ],[
-         "",
-         "",
-         ""
+         "After the Munchkins greet Dorothy in Oz, they mention the Witch of the North. What specific advice or information does the Witch of the North give Dorothy about getting back to Kansas?",
+         "Exactly, the Witch of the North advises Dorothy to follow the yellow brick road to the Emerald City and seek the help of the Wizard of Oz, as he might be able to help her return to Kansas.",
+         "It can be a lot to remember, but the key advice Dorothy receives is to follow the yellow brick road to the Emerald City to ask the Wizard of Oz for help in getting back to Kansas. This guidance sets Dorothy on her path for the adventures ahead."
         ],
     ]
 )

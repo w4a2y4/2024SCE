@@ -13,7 +13,7 @@ from gui_components import *
 from ch1 import ch1
 from ch2 import ch2
 
-ROBOT_EXIST = False
+ROBOT_EXIST = True
 USING_GPT = False
 IP = '192.168.1.103'
 
@@ -104,9 +104,9 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.setTtsBtn(CONTINUE_READING))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("Ask in-between questions"))
+        layout.addWidget(self.setTtsBtn(INBETWEEN_QUESTION))
         layout.addLayout(self._inBetweenQuestions(ch1))
         layout.addLayout(self._inBetweenQuestions(ch2))
-        layout.addWidget(self.setTtsBtn(INBETWEEN_QUESTION))
         layout.addWidget(HorizontalSeperatorLine())
         layout.addWidget(QLabel("Answer random questions"))
         layout.addWidget(self.setTtsBtn(DEFAULT_ANSWER))

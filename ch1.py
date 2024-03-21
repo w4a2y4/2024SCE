@@ -21,9 +21,9 @@ ch1 = Chapter(
          "Absolutely, Toto is more than just a pet to Dorothy; he’s her best friend. They have a really special bond, don't they?",
          "Toto is really important to Dorothy because he's her only companion in Kansas. It's okay if you can’t recall having a pet or friend like that; everyone’s experiences are different. Toto is like a little guardian for Dorothy."
         ],[
-         "",
-         "",
-         ""
+         "As Dorothy's house is caught by the cyclone, what is the first major thing she notices happening to her surroundings inside the house? How does she react to the situation?",
+         "Right, Dorothy notices that the house is lifted off the ground and begins to spin around. Despite the chaos, she remains surprisingly calm, lying on her bed and waiting to see what happens next.",
+         "It might seem a bit tricky, but Dorothy observes her house being lifted and spun by the cyclone. Interestingly, she manages to stay calm, lying on her bed, curious about the outcome."
         ],
     ]
 )
